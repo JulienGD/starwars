@@ -11,9 +11,9 @@ var loader = new THREE.ColladaLoader();
 
 var Planete = function(planeteJSON)
 {
-    this.x = planeteJSON.posX;
+    this.x = 0;
     this.y = planeteJSON.posY;
-    this.z = planeteJSON.posZ;
+    this.z = 0;
     this.size = planeteJSON.size;
     this.sens = planeteJSON.sens;
     this.amp = planeteJSON.amp;
@@ -28,7 +28,7 @@ Planete.prototype.load = function()
         var dae = collada.scene;
         var skin = collada.skins[0];
 
-        dae.position.set(self.x,self.y,self.z);//x,z,y- if you think in blender dimensions ;)
+        dae.position.set(self.x,self.y,self.z);
         dae.scale.set(self.size,self.size,self.size);
         scene.add(dae);
 
@@ -76,18 +76,6 @@ function init()
 
 	dirLight.color.setHSL( 0.56, 0.53, 0.29 );
 
-
- //    var geometry = new THREE.BoxGeometry( 19, 19, 19 );
-	// var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-	// var cube = new THREE.Mesh( geometry, material );
-	// scene.add( cube );
-	
-    window.addEventListener('resize', function() {
-        renderer.setSize(WIDTH, HEIGHT);
-        camera.aspect = WIDTH / HEIGHT;
-        camera.updateProjectionMatrix();
-    });
-
     textureFlare0 = THREE.ImageUtils.loadTexture( "../textures/lensflare0_alpha.png" );
  	textureFlare2 = THREE.ImageUtils.loadTexture( "../textures/lensflare2.png" );
  	textureFlare3 = THREE.ImageUtils.loadTexture( "../textures/lensflare3.png" );
@@ -96,18 +84,12 @@ function init()
 	addLight( 0.08, 0.8, 0.5,    0, 0, -000 );
 	addLight( 0.995, 0.5, 0.9, 5000, 000, -000 );
 
-				
-
-
-
-
-
-
     hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 );
-				hemiLight.color.setHSL( 0.6, 1, 0.6 );
-				hemiLight.groundColor.setHSL( 0.095, 1, 0.75 );
-				hemiLight.position.set( 0, 1000, 40 );
-				scene.add( hemiLight );
+	hemiLight.color.setHSL( 0.6, 1, 0.6 );
+	hemiLight.groundColor.setHSL( 0.095, 1, 0.75 );
+	hemiLight.position.set( 0, 100, 40 );
+	scene.add( hemiLight );
+
 	// dirLight = new THREE.DirectionalLight( 0xffffff, 1 );
 	// 			dirLight.color.setHSL( 0.1, 1, 0.95 );
 	// 			dirLight.position.set( -1, 1.75, 1 );
@@ -134,25 +116,27 @@ function init()
   	loader.options.convertUpAxis = true;
   	createSystem();
   	
-    // controls = new THREE.OrbitControls(camera, renderer.domElement);
-    // controls.maxDistance = 1000;
-    // controls.minDistance = 100;
-    // controls.rotateSpeed = 0.5;
-    // // controls.maxPolarAngle = Math.PI * 0.495;
-    // // controls.minPolarAngle = Math.PI * 0.495;
-    // controls.noPan = true;
     center = scene.position;
-
+    //initialisation des controles
     controls = new THREE.FlyControls( camera, renderer.domElement );
-
-	controls.movementSpeed = 100
+    // parametres de controle via la souris
+	controls.movementSpeed = 500;
 	controls.domElement = container;
 	controls.rollSpeed = 0.09;
 	controls.autoForward = false;
-	controls.dragToLook = false;
+	controls.dragToLook = true;
+	controls.maxDistance = 1000;
+    controls.minDistance = 100;
+
 	renderer.setClearColor( scene.fog.color, 1 );
 	renderer.gammaInput = true;
 	renderer.gammaOutput = true;
+
+	window.addEventListener('resize', function() {
+        renderer.setSize(WIDTH, HEIGHT);
+        camera.aspect = WIDTH / HEIGHT;
+        camera.updateProjectionMatrix();
+    });
 
     renderer.domElement.addEventListener( 'mousemove', onDocumentMouseMove, false );
 	renderer.domElement.addEventListener( 'mousedown', onDocumentMouseDown, false );
@@ -188,28 +172,23 @@ function addLight( h, s, l, x, y, z ) {
 
 }
 
- function lensFlareUpdateCallback( object ) {
-
+function lensFlareUpdateCallback( object )
+{
 	var f, fl = object.lensFlares.length;
 	var flare;
 	var vecX = -object.positionScreen.x * 2;
 	var vecY = -object.positionScreen.y * 2;
 
-
-	for( f = 0; f < fl; f++ ) {
-
-		   flare = object.lensFlares[ f ];
-
-		   flare.x = object.positionScreen.x + vecX * flare.distance;
-		   flare.y = object.positionScreen.y + vecY * flare.distance;
-
-		   flare.rotation = 0;
-
+	for(f = 0; f < fl; f++)
+	{
+	   flare = object.lensFlares[ f ];
+	   flare.x = object.positionScreen.x + vecX * flare.distance;
+	   flare.y = object.positionScreen.y + vecY * flare.distance;
+	   flare.rotation = 0;
 	}
 
-	object.lensFlares[ 2 ].y += 0.025;
-	object.lensFlares[ 3 ].rotation = object.positionScreen.x * 0.5 + THREE.Math.degToRad( 45 );
-
+	object.lensFlares[2].y += 0.025;
+	object.lensFlares[3].rotation = object.positionScreen.x * 0.5 + THREE.Math.degToRad( 45 );
 }
 
 
@@ -226,8 +205,8 @@ function render()
 	if(statutRot){
 		var timer = Date.now();
 		for (var i = 0; i < planetes.length; i++){
-			planetes[i].mesh.position.x = Math.cos( timer * planetes[i].speed * planetes[i].sens) * planetes[i].amp  ;
-			planetes[i].mesh.position.z = Math.sin( timer * planetes[i].speed * planetes[i].sens) * planetes[i].amp  ;
+			planetes[i].mesh.position.x = Math.cos(timer * planetes[i].speed * planetes[i].sens) * planetes[i].amp  ;
+			planetes[i].mesh.position.z = Math.sin(timer * planetes[i].speed * planetes[i].sens) * planetes[i].amp  ;
 			planetes[i].mesh.rotation.y;
 		}
 	}
@@ -265,18 +244,25 @@ function replaceCamera(x,y,z)
 
 $('.test').on('click', function()
 {
+
 	index 	= $(this).data('index');
+
 	center = planetes[index].mesh.position;
- 	
 	zoomOnPlanet(index); 	
 });
 
-$('#close').on('click',function()
+$('.face').on('click', function()
+{
+	replaceCamera(0,50,500);
+});
+
+$('.reset').on('click',function()
 {
 	$('#close').css('display','none');
+	$('.face').css('display','block');
 	
 	center = scene.position;
-	controls.enabled = true;
+	controls.dragToLook = false;
 	statutRot = true;
 	replaceCamera(0,50,500);
 });
@@ -289,11 +275,10 @@ function zoomOnPlanet(i)
  	z=planetes[i].mesh.position.z + pas;
  	
  	$('#close').css('display','block');
- 	
+ 	$('.face').css('display','none');
  	replaceCamera(x,y,z);
  	statutRot = false;
- 	controls.enabled = false;
- 	
+ 	controls.dragToLook = true;
 }
 
 function onDocumentMouseMove( event )
@@ -310,10 +295,10 @@ function onDocumentMouseDown( event )
 	event.preventDefault();
 
 	var vector = new THREE.Vector3( mouse.x, mouse.y, 0.5 );
-	vector.unprojectVector(camera);
+	vector.unproject(camera);
 	var raycaster = new THREE.Raycaster( camera.position, vector.sub( camera.position ).normalize() );
 
-	var intersects = raycaster.intersectObjects( planetes );
+	var intersects = raycaster.intersectObjects( planetes ,true);
 
 	if ( intersects.length > 0 ) {
 
@@ -324,21 +309,19 @@ function onDocumentMouseDown( event )
 function onDocumentMouseUp( event )
 {
 	console.log('out');
-	// event.preventDefault();
+	event.preventDefault();
 
-	// var vector = new THREE.Vector3( mouse.x, mouse.y, 0.5 ).unproject( camera );
+// 	var vector = new THREE.Vector3( mouse.x, mouse.y, 0.5 ).unprojectVector( camera );
 
-	// var raycaster = new THREE.Raycaster( camera.position, vector.sub( camera.position ).normalize() );
+// 	var raycaster = new THREE.Raycaster( camera.position, vector.sub( camera.position ).normalize() );
 
-	// var intersects = raycaster.intersectObjects( objects );
+// 	var intersects = raycaster.intersectObjects( objects );
 
-	// if ( intersects.length > 0 ) {
+// 	if ( intersects.length > 0 ) {
 
 		
-	// }
+// 	}
 }
-
-
 
 init();
 animate();
