@@ -1,0 +1,108 @@
+body {
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  #menu{
+    position: absolute;
+    z-index: 10;
+  }
+  #container {
+    position: absolute;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    top: 0;
+    height: 100%;
+    z-index: 1;
+    background: #fff;
+    background: -moz-linear-gradient(#749bff, #000);
+    background: -webkit-gradient(linear, 0% 100%, 0% 0%, from(#000), to(#749bff));
+    background: -webkit-linear-gradient(#749bff, #000);
+  }
+  canvas{
+    z-index: 1;
+  }
+  #close{
+    display: none;
+  }
+  #name{
+    font-family: Star Jedi Hollow;
+    display: none;
+    position: absolute;
+    z-index: 20;
+    text-align: center;
+    width: 30%;
+    margin-left:35%;
+    border: 5px solid #fee34b;
+    bottom: 20px;
+  
+
+  
+    h2.name{
+      font-size: 60px;
+      color: #fee34b;
+      text-transform: lowercase;
+      -webkit-margin-before: 0;
+      -webkit-margin-after: 0;
+
+    }
+    H5{
+      font-family: sans-serif;
+      color: #fee34b;
+      text-transform: uppercase;
+    }
+  }
+  #info{
+    width: 300px;
+    height: 500px;
+    background-color: rgba(255, 255, 255, 0.2);
+    z-index: 25;
+    color: #fff;
+    position: absolute;
+    display: none;
+    margin: 50px;
+
+      #info-abstract{
+        margin: 15px;
+        font-family: Cambria;
+      }
+  }
+  #photo{
+    position: absolute;
+    z-index: 20;
+    margin-top: 500px;
+    margin-left: 900px;
+    display: none;
+
+  }
+    img{
+      width: 60%;
+    }
+    #lolo{
+      position: absolute;
+    }
+    .circle-container {
+    position: relative;
+    width: 24em;
+    height: 24em;
+    padding: 2.8em;
+    /*2.8em = 2em*1.4 (2em = half the width of a link with img, 1.4 = sqrt(2))*/
+    border: dashed 1px;
+    border-radius: 50%;
+    margin: 1.75em auto 0;
+}
+    .circle-container a {
+        display: block;
+        position: absolute;
+        top: 50%; left: 50%;
+        width: 4em; height: 4em;
+        margin: -2em;
+    }
+    .circle-container img { display: block; width: 100%; }
+    .deg0 { transform: translate(12em); } /* 12em = half the width of the wrapper */
+    .deg45 { transform: rotate(45deg) translate(12em) rotate(-45deg); }
+    .deg135 { transform: rotate(135deg) translate(12em) rotate(-135deg); }
+    .deg180 { transform: translate(-12em); }
+    .deg225 { transform: rotate(225deg) translate(12em) rotate(-225deg); }
+    .deg315 { transform: rotate(315deg) translate(12em) rotate(-315deg); }
+}
