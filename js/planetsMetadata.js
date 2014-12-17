@@ -12,7 +12,6 @@ var planetsMetadata = [
 	{
 		name : "Naboo",
 		text : {
-			abstract : ""
 			abstract : "Naboo (pronounced /nə'bu/) was a planet that was the sector capital of the Chommell sector near the Outer Rim territories. It was a largely unspoiled world with large plains, swamps and seas. It was mostly known as the homeworld of notable historical figures who played major roles in the downfall of the Galactic Republic and the rise of the Galactic Empire, namely Padmé Amidala, Emperor Palpatine and Jar Jar Binks.",
 			geography : "Naboo was a geologically unique world in the galaxy. A plasmic molten outer core surrounded an inner core, believed to be composed primarily of a nickel-iron alloy, with very small amounts of some other elements. These elements were found in abundance in other chemical compositions in the galaxy, but it is the unique properties of the plasma which interested astrophysicists, plasma which the two primary civilizations harnessed to supply clean and efficient energy highly valued throughout the galaxy.",
 			history : "Around 3951 BBY, prior to the end of the Sith Civil War, Elsinoré den Tasia ascended to the throne of the Core World of Grizmallt. She sponsored the Republic explorer Kwilaan, who discovered Naboo with a fleet of three ships—Beneficent Tasia, Constant and Mother Vima. The planet became known as Naboo, after the deity Nabu. Naboo quickly became notorious amongst big game hunters who favored the indigenous veermoks, although it would be five decades before permanent Human settlement.",

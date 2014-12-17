@@ -305,8 +305,24 @@ function replaceCamera(x,y,z)
 
 $('.test').on('click', function()
 {
+	$('#info-abstract').html("");
 	index 	= $(this).data('index');
-	zoomOnPlanet(index,130); 	
+	center = planetes[index].mesh.position;
+	setTimeout(function() {
+		$("#name").fadeIn(400, 'swing', function(){
+	      	$('.name').html(planetsMetadata[index].name);
+			
+		});
+     	$("#info").fadeIn(400, 'swing', function(){
+			$('#info-abstract').html(planetsMetadata[index].text.abstract);
+
+		});
+		$("#photo").fadeIn(400, 'swing', function(){
+      		$('#photo > img').attr("src", planetsMetadata[index].image );
+		});
+	}, 2000);
+ 	 
+	zoomOnPlanet(index, 130); 	
 });
 
 $('.face').on('click', function()
@@ -318,12 +334,29 @@ $('.reset').on('click',function()
 {
 	$('#close').css('display','none');
 	$('.face').css('display','block');
+	$('.name').fadeOut(300);
+	// $('#photo > img').css('display','none');
 	
 	center = scene.position;
 	controls.enabled = true;
 	statutRot = true;
+	$("#info").fadeOut();
 	replaceCamera(0,50,4000);
 });
+
+$(document).keypress(function(e){
+	if(e.keyCode==109 && $('.circle-container').css('display') == "none"){
+		$('.circle-container').fadeIn(400);
+		$('#container').addClass("blur");
+	}
+
+	else if(e.keyCode==109 && $('.circle-container').css('display') == "block"){
+		$('.circle-container').fadeOut(400);
+		$('#container').removeClass("blur");
+	}
+
+});
+
 
 function zoomOnPlanet(i,decalZoom)
 {
