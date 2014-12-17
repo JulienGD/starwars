@@ -1,6 +1,7 @@
 var planetesArray = [
     {
         name : 'Naboo',
+        assets2 : 'assets/planet.dae',
         posY : 50,
         size : 5,
         sens : -1,
@@ -71,5 +72,14 @@ var planetesArray = [
         speed : 0.0003
       
     },
+    {
+        name : 'Naboo',
+        posY : -56,
+        size : 2,
+        sens : 1,
+        amp  : 540,
+        speed : 0.0003
+      
+    }
 
 ];

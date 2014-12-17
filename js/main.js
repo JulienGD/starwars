@@ -1,5 +1,6 @@
 var scene, camera, renderer,bouton,index,center,
 	textureFlare0,textureFlare1,textureFlare3,
+	particles, geometry, materials = [], parameters,i,h,color,
 	planetes  = [],
 	mouse = new THREE.Vector2(),
 	statutRot = true,
@@ -8,8 +9,10 @@ var scene, camera, renderer,bouton,index,center,
 	container = document.getElementById('container');
 var clock = new THREE.Clock();
 var loader = new THREE.ColladaLoader();
+var mount = 500;
+var loaded = false;
 
-var Planete = function(planeteJSON)
+var Planete = function(planeteJSON,index)
 {
     this.x = 0;
     this.y = planeteJSON.posY;
@@ -18,6 +21,7 @@ var Planete = function(planeteJSON)
     this.sens = planeteJSON.sens;
     this.amp = planeteJSON.amp;
     this.speed = planeteJSON.speed;
+    this.index = index;
 };
 
 Planete.prototype.load = function()
@@ -33,13 +37,16 @@ Planete.prototype.load = function()
         scene.add(dae);
 
         self.mesh = dae;
+        
+    	loaded = true;
     }); 
+
 }
 
 function createSystem()
 {
-    for (var i = 0; i < planetesArray.length; i++){
-		var planet = new Planete(planetesArray[i]);
+    for (var i = 0; i < planetesArray.length-1; i++){
+		var planet = new Planete(planetesArray[i],i);
         planetes.push(planet);
         planet.load();
     }
@@ -70,7 +77,7 @@ function init()
 	scene.add( ambient );
 
 
-	var dirLight = new THREE.DirectionalLight( 0xffffff, 0.125 );
+	var dirLight = new THREE.DirectionalLight(0xffffff, 0.125);
 	dirLight.position.set( 0, -1, 0 ).normalize();
 	scene.add( dirLight );
 
@@ -84,34 +91,38 @@ function init()
 	addLight( 0.08, 0.8, 0.5,    0, 0, -000 );
 	addLight( 0.995, 0.5, 0.9, 5000, 000, -000 );
 
+	var pointLight = new THREE.PointLight(0xffffff,1,100);
+	pointLight.position.set(6,6,6);
+	scene.add(pointLight);
+
     hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 );
 	hemiLight.color.setHSL( 0.6, 1, 0.6 );
 	hemiLight.groundColor.setHSL( 0.095, 1, 0.75 );
 	hemiLight.position.set( 0, 100, 40 );
 	scene.add( hemiLight );
 
-	// dirLight = new THREE.DirectionalLight( 0xffffff, 1 );
-	// 			dirLight.color.setHSL( 0.1, 1, 0.95 );
-	// 			dirLight.position.set( -1, 1.75, 1 );
-	// 			dirLight.position.multiplyScalar( 50 );
-	// 			scene.add( dirLight );
+	dirLight = new THREE.DirectionalLight( 0xffffff, 1 );
+	dirLight.color.setHSL( 0.1, 1, 0.95 );
+	dirLight.position.set( -1, 1.75, 1 );
+	dirLight.position.multiplyScalar( 50 );
+	scene.add( dirLight );
 
-	// 			dirLight.castShadow = true;
+	dirLight.castShadow = true;
 
-	// 			dirLight.shadowMapWidth = 2048;
-	// 			dirLight.shadowMapHeight = 2048;
+	dirLight.shadowMapWidth = 2048;
+	dirLight.shadowMapHeight = 2048;
 
-	// 			var d = 50;
+	var d = 50;
 
-	// 			dirLight.shadowCameraLeft = -d;
-	// 			dirLight.shadowCameraRight = d;
-	// 			dirLight.shadowCameraTop = d;
-	// 			dirLight.shadowCameraBottom = -d;
+	dirLight.shadowCameraLeft = -d;
+	dirLight.shadowCameraRight = d;
+	dirLight.shadowCameraTop = d;
+	dirLight.shadowCameraBottom = -d;
 
-	// 			dirLight.shadowCameraFar = 3500;
-	// 			dirLight.shadowBias = -0.0001;
-	// 			dirLight.shadowDarkness = 0.35;
-	// 			dirLight.shadowCameraVisible = true;
+	dirLight.shadowCameraFar = 3500;
+	dirLight.shadowBias = -0.0001;
+	dirLight.shadowDarkness = 0.35;
+	dirLight.shadowCameraVisible = true;
 
   	loader.options.convertUpAxis = true;
   	createSystem();
@@ -141,6 +152,45 @@ function init()
     renderer.domElement.addEventListener( 'mousemove', onDocumentMouseMove, false );
 	renderer.domElement.addEventListener( 'mousedown', onDocumentMouseDown, false );
 	renderer.domElement.addEventListener( 'mouseup', onDocumentMouseUp, false );
+
+	geometry = new THREE.Geometry();
+
+	//on assigne a toute les particules une position via une boucle.
+	for(i=0;i<mount; i++){
+		var vertex = new THREE.Vector3();
+		vertex.x = Math.random()* 2000 - 1000;
+		vertex.y = Math.random()*2000 - 1000;
+		vertex.z = Math.random()*2000 - 1000;
+		geometry.vertices.push(vertex);
+	}
+	//Tableau contenant differnet code couleur, et la taille des particules;
+	parameters = [
+		[[1,1,0.5],7],
+		[[0.95,1,0.5],6],
+		[[0.90,0.3,0.5],5],
+		[[0.85,0.3,0.5],4],
+		[[0.80,0.3,0.5],3]
+	];	
+	sprite = THREE.ImageUtils.loadTexture("textures/ball.png");
+	
+	//on assigne la taille a chaque particule via une boucle.
+	for(i=0;i<parameters.length;i++){
+		size = parameters[i][1];
+
+		materials[i] = new THREE.PointCloudMaterial({
+			size : size,
+			map : sprite,
+			transparent : true
+		});
+		particules = new THREE.PointCloud(geometry,materials[i]);
+
+		particules.rotation.x = Math.random()*6;
+		particules.rotation.y = Math.random()*6;
+		particules.rotation.z = Math.random()*6;
+
+		//puis on ajoute le tout a la scene
+		scene.add(particules);
+	}
 }
 
 
@@ -202,25 +252,31 @@ function animate()
 
 function render()
 {
-	if(statutRot){
-		var timer = Date.now();
-		for (var i = 0; i < planetes.length; i++){
-			planetes[i].mesh.position.x = Math.cos(timer * planetes[i].speed * planetes[i].sens) * planetes[i].amp  ;
-			planetes[i].mesh.position.z = Math.sin(timer * planetes[i].speed * planetes[i].sens) * planetes[i].amp  ;
-			planetes[i].mesh.rotation.y;
+	if(loaded)
+	{
+		if(statutRot)
+		{
+			var timer = Date.now();
+			for (var i = 0; i < planetes.length; i++)
+			{
+				planetes[i].mesh.position.x = Math.cos(timer * planetes[i].speed * planetes[i].sens) * planetes[i].amp  ;
+				planetes[i].mesh.position.z = Math.sin(timer * planetes[i].speed * planetes[i].sens) * planetes[i].amp  ;
+				planetes[i].mesh.rotation.y;
+			}
 		}
-	}
 
-	for (var i = 0; i < planetes.length; i++){
+		for (var i = 0; i < planetes.length; i++)
+		{
 			planetes[i].mesh.rotation.y += 0.01;
 		}
+	}
 
 	var delta = clock.getDelta();
 
 	controls.update( delta );
-	if(!statutRot){
+	if(!statutRot)
 		camera.lookAt(center);
-	}
+
 	renderer.render(scene, camera);
 }
 
@@ -298,11 +354,18 @@ function onDocumentMouseDown( event )
 	vector.unproject(camera);
 	var raycaster = new THREE.Raycaster( camera.position, vector.sub( camera.position ).normalize() );
 
-	var intersects = raycaster.intersectObjects( planetes ,true);
+	var temp_planets = [];
+	for(var i = 0; i < planetes.length; i++)
+	{
+		planetes[i].mesh.test = i;
+		temp_planets.push(planetes[i].mesh);
+	}
 
-	if ( intersects.length > 0 ) {
+	var intersects = raycaster.intersectObjects(temp_planets,true);
 
-		alert('ok');
+	if ( intersects.length > 0 )
+	{
+		console.log(intersects[0].object);
 	}
 }
 
