@@ -9,7 +9,7 @@ var scene, camera, renderer,bouton,index,center,
 	container = document.getElementById('container');
 var clock = new THREE.Clock();
 var loader = new THREE.ColladaLoader();
-var mount = 500;
+var mount = 1000;
 var loaded = false;
 
 var Planete = function(planeteJSON,index)
@@ -48,7 +48,7 @@ Planete.prototype.load = function()
 
 function createSystem()
 {
-    for (var i = 0; i < planetesArray.length-1; i++){
+    for (var i = 0; i < planetesArray.length; i++){
 		var planet = new Planete(planetesArray[i],i);
         planetes.push(planet);
         planet.load();
@@ -72,7 +72,7 @@ function init()
 
     camera = new THREE.PerspectiveCamera(45, WIDTH / HEIGHT, 1, 10000);
     camera.position.y = 50;
-    camera.position.z = 1500;
+    camera.position.z = 4000;
     scene.add(camera);
 
     var ambient = new THREE.AmbientLight( 0xffffff );
@@ -165,9 +165,9 @@ function init()
 	//on assigne a toute les particules une position via une boucle.
 	for(i=0;i<mount; i++){
 		var vertex = new THREE.Vector3();
-		vertex.x = Math.random()* 2000 - 1000;
-		vertex.y = Math.random()*2000 - 1000;
-		vertex.z = Math.random()*2000 - 1000;
+		vertex.x = Math.random()* 4000 - 3000;
+		vertex.y = Math.random()*4000 - 3000;
+		vertex.z = Math.random()*4000 - 3000;
 		geometry.vertices.push(vertex);
 	}
 	//Tableau contenant differnet code couleur, et la taille des particules;
@@ -305,9 +305,8 @@ function replaceCamera(x,y,z)
 
 $('.test').on('click', function()
 {
-
 	index 	= $(this).data('index');
-	zoomOnPlanet(index,50); 	
+	zoomOnPlanet(index,130); 	
 });
 
 $('.face').on('click', function()
@@ -321,9 +320,9 @@ $('.reset').on('click',function()
 	$('.face').css('display','block');
 	
 	center = scene.position;
-	controls.dragToLook = false;
+	controls.enabled = true;
 	statutRot = true;
-	replaceCamera(0,50,500);
+	replaceCamera(0,50,4000);
 });
 
 function zoomOnPlanet(i,decalZoom)
@@ -333,12 +332,12 @@ function zoomOnPlanet(i,decalZoom)
  	x=planetes[i].mesh.position.x + pas;
  	y=planetes[i].mesh.position.y + pas;
  	z=planetes[i].mesh.position.z + pas;
- 	
+
  	$('#close').css('display','block');
  	$('.face').css('display','none');
  	replaceCamera(x,y,z);
  	statutRot = false;
- 	controls.dragToLook = true;
+ 	controls.enabled = false;
 }
 
 function onDocumentMouseMove( event )
@@ -362,8 +361,6 @@ function onDocumentMouseMove( event )
 	if ( intersects.length > 0 )
 	{
 		var pos1 = intersects[0].object.parent.parent.instance.name;
-
-		console.log(pos1);
 	}
 }
 
