@@ -15,6 +15,7 @@ var loaded = false;
 var Planete = function(planeteJSON,index)
 {
     this.x = 0;
+    this.name = planeteJSON.name;
     this.y = planeteJSON.posY;
     this.z = 0;
     this.size = planeteJSON.size;
@@ -22,13 +23,15 @@ var Planete = function(planeteJSON,index)
     this.amp = planeteJSON.amp;
     this.speed = planeteJSON.speed;
     this.index = index;
+    this.asset_1 = planeteJSON.assetSimple;
+
 };
 
 Planete.prototype.load = function()
 { 
 	var self = this;
 
-    loader.load( 'assets/planet.dae', function ( collada ) {
+    loader.load( self.asset_1, function ( collada ) {
         var dae = collada.scene;
         var skin = collada.skins[0];
 
@@ -37,10 +40,10 @@ Planete.prototype.load = function()
         scene.add(dae);
 
         self.mesh = dae;
+        self.mesh.instance = self;
         
     	loaded = true;
-    }); 
-
+    });
 }
 
 function createSystem()
@@ -76,6 +79,10 @@ function init()
 	ambient.color.setHSL( 0.56, 0.53, 0.19 );
 	scene.add( ambient );
 
+	// var geometry = new THREE.SphereGeometry( 20, 32, 32 );
+	// var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+	// var cube = new THREE.Mesh( geometry, material );
+	// scene.add( cube );
 
 	var dirLight = new THREE.DirectionalLight(0xffffff, 0.125);
 	dirLight.position.set( 0, -1, 0 ).normalize();
@@ -129,14 +136,15 @@ function init()
   	
     center = scene.position;
     //initialisation des controles
-    controls = new THREE.FlyControls( camera, renderer.domElement );
+    // controls = new THREE.FlyControls( camera, renderer.domElement );
+    controls = new THREE.OrbitControls( camera, renderer.domElement );
     // parametres de controle via la souris
 	controls.movementSpeed = 500;
 	controls.domElement = container;
 	controls.rollSpeed = 0.09;
 	controls.autoForward = false;
 	controls.dragToLook = true;
-	controls.maxDistance = 1000;
+	controls.maxDistance = 5000;
     controls.minDistance = 100;
 
 	renderer.setClearColor( scene.fog.color, 1 );
@@ -151,7 +159,6 @@ function init()
 
     renderer.domElement.addEventListener( 'mousemove', onDocumentMouseMove, false );
 	renderer.domElement.addEventListener( 'mousedown', onDocumentMouseDown, false );
-	renderer.domElement.addEventListener( 'mouseup', onDocumentMouseUp, false );
 
 	geometry = new THREE.Geometry();
 
@@ -236,11 +243,9 @@ function lensFlareUpdateCallback( object )
 	   flare.y = object.positionScreen.y + vecY * flare.distance;
 	   flare.rotation = 0;
 	}
-
 	object.lensFlares[2].y += 0.025;
 	object.lensFlares[3].rotation = object.positionScreen.x * 0.5 + THREE.Math.degToRad( 45 );
 }
-
 
 function animate()
 {
@@ -302,9 +307,7 @@ $('.test').on('click', function()
 {
 
 	index 	= $(this).data('index');
-
-	center = planetes[index].mesh.position;
-	zoomOnPlanet(index); 	
+	zoomOnPlanet(index,50); 	
 });
 
 $('.face').on('click', function()
@@ -323,9 +326,10 @@ $('.reset').on('click',function()
 	replaceCamera(0,50,500);
 });
 
-function zoomOnPlanet(i)
+function zoomOnPlanet(i,decalZoom)
 {
- 	pas = planetes[i].size + 50;
+	center = planetes[i].mesh.position;
+ 	pas = planetes[i].size + decalZoom;
  	x=planetes[i].mesh.position.x + pas;
  	y=planetes[i].mesh.position.y + pas;
  	z=planetes[i].mesh.position.z + pas;
@@ -343,11 +347,28 @@ function onDocumentMouseMove( event )
 
 	mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
 	mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+
+
+	var vector = new THREE.Vector3( mouse.x, mouse.y, 0.5 );
+	vector.unproject(camera);
+	var raycaster = new THREE.Raycaster( camera.position, vector.sub( camera.position ).normalize() );
+
+	var temp_planets = [];
+	for(var i = 0; i < planetes.length; i++)
+		temp_planets.push(planetes[i].mesh);
+
+	var intersects = raycaster.intersectObjects(temp_planets,true);
+
+	if ( intersects.length > 0 )
+	{
+		var pos1 = intersects[0].object.parent.parent.instance.name;
+
+		console.log(pos1);
+	}
 }
 
 function onDocumentMouseDown( event )
 {
-	console.log('in');
 	event.preventDefault();
 
 	var vector = new THREE.Vector3( mouse.x, mouse.y, 0.5 );
@@ -356,34 +377,16 @@ function onDocumentMouseDown( event )
 
 	var temp_planets = [];
 	for(var i = 0; i < planetes.length; i++)
-	{
-		planetes[i].mesh.test = i;
 		temp_planets.push(planetes[i].mesh);
-	}
 
 	var intersects = raycaster.intersectObjects(temp_planets,true);
 
 	if ( intersects.length > 0 )
 	{
-		console.log(intersects[0].object);
+		console.log(intersects[0].object.parent.parent.instance.index);
+		var pos = intersects[0].object.parent.parent.instance.index;
+		zoomOnPlanet(pos,130);
 	}
-}
-
-function onDocumentMouseUp( event )
-{
-	console.log('out');
-	event.preventDefault();
-
-// 	var vector = new THREE.Vector3( mouse.x, mouse.y, 0.5 ).unprojectVector( camera );
-
-// 	var raycaster = new THREE.Raycaster( camera.position, vector.sub( camera.position ).normalize() );
-
-// 	var intersects = raycaster.intersectObjects( objects );
-
-// 	if ( intersects.length > 0 ) {
-
-		
-// 	}
 }
 
 init();

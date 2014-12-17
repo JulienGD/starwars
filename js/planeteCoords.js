@@ -1,7 +1,7 @@
 var planetesArray = [
     {
-        name : 'Naboo',
-        assets2 : 'assets/planet.dae',
+        name : 'Kamino',
+        assetSimple : 'assets/kamino_simple.dae',
         posY : 50,
         size : 5,
         sens : -1,
@@ -10,7 +10,8 @@ var planetesArray = [
       
     },
     {
-        name : 'Naboo',
+        name : 'tatooine',
+        assetSimple : 'assets/tatooine_simple.dae',
         posY : -50,
         size : 10,
         sens : 1,
@@ -19,7 +20,8 @@ var planetesArray = [
       
     },
     {
-        name : 'Naboo',
+        name : 'alderaan',
+        assetSimple : 'assets/alderaan_simple.dae',
         posY : 100,
         size : 10,
         sens : -1,
@@ -29,6 +31,7 @@ var planetesArray = [
     },
     {
         name : 'Naboo',
+        assetSimple : 'assets/naboo_simple.dae',
         posY : -10,
         size : 10,
         sens : -1,
@@ -37,7 +40,8 @@ var planetesArray = [
       
     },
     {
-        name : 'Naboo',
+        name : 'Coruscant',
+        assetSimple : 'assets/coruscant_simple.dae',
         posY : 45,
         size : 22,
         sens : -1,
@@ -47,6 +51,7 @@ var planetesArray = [
     },
     {
         name : 'Naboo',
+        assetSimple : 'assets/planet.dae',
         posY : -130,
         size : 20,
         sens : 1,
@@ -56,6 +61,7 @@ var planetesArray = [
     },
     {
         name : 'Naboo',
+        assetSimple : 'assets/planet.dae',
         posY : 20,
         size : 10,
         sens : -1,
@@ -65,6 +71,7 @@ var planetesArray = [
     },
     {
         name : 'Naboo',
+        assetSimple : 'assets/planet.dae',
         posY : -56,
         size : 30,
         sens : 1,
@@ -74,6 +81,7 @@ var planetesArray = [
     },
     {
         name : 'Naboo',
+        assetSimple : 'assets/planet.dae',
         posY : -56,
         size : 2,
         sens : 1,
