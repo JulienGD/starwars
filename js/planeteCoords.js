@@ -10,7 +10,7 @@ var planetesArray = [
     },
     {
         name : 'Coruscant',
-        assetSimple : 'assets/planet.dae',
+        assetSimple : 'assets/corucsant_simple.dae',
         posY : 45,
         size : 19,
         sens : 1,
@@ -19,8 +19,8 @@ var planetesArray = [
     },
     {
         name : 'Naboo',
-        assetSimple : 'assets/planet.dae',
-        posY : -10,
+        assetSimple : 'assets/naboo_simple.dae',
+        posY : -90,
         size : 17,
         sens : -1,
         amp  : 600,
@@ -29,7 +29,7 @@ var planetesArray = [
     },
     {
         name : 'tatooine',
-        assetSimple : 'assets/planet.dae',
+        assetSimple : 'assets/tatooine_simple.dae',
         posY : -50,
         size : 14,
         sens : 1,
@@ -39,7 +39,7 @@ var planetesArray = [
     }, 
     {
         name : 'Dagobah',
-        assetSimple : 'assets/planet.dae',
+        assetSimple : 'assets/dagobah_simple.dae',
         posY : 100,
         size : 10,
         sens : -1,
@@ -49,7 +49,7 @@ var planetesArray = [
     },
     {
         name : 'Mustafar',
-        assetSimple : 'assets/planet.dae',
+        assetSimple : 'assets/mustafar_simple.dae',
         posY : 45,
         size : 6,
         sens : -1,
@@ -59,7 +59,7 @@ var planetesArray = [
     },
     {
         name : 'Kamino',
-        assetSimple : 'assets/planet.dae',
+        assetSimple : 'assets/kamino_simple.dae',
         posY : 50,
         size : 30,
         sens : 1,
@@ -69,7 +69,7 @@ var planetesArray = [
     },
     {
         name : 'Korriban',
-        assetSimple : 'assets/planet.dae',
+        assetSimple : 'assets/korriban_simple.dae',
         posY : -130,
         size : 25,
         sens : -1,
