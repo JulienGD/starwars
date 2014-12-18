@@ -313,16 +313,19 @@ $('.test').on('click', function()
 	      	$('.name').html(planetsMetadata[index].name);
 			
 		});
-     	$("#info").fadeIn(400, 'swing', function(){
-			$('#info-abstract').html(planetsMetadata[index].text.abstract);
+     	$(".item").fadeIn(400, 'swing', function(){
+			$('.content > p').html(planetsMetadata[index].text.abstract);
 
 		});
-		$("#photo").fadeIn(400, 'swing', function(){
+		$("#photo").fadeIn(500, 'swing', function(){
       		$('#photo > img').attr("src", planetsMetadata[index].image );
 		});
+		$(".hexagon").fadeIn(400);
 	}, 2000);
  	 
-	zoomOnPlanet(index, 130); 	
+	zoomOnPlanet(index, 130); 
+	$('.circle-container').fadeOut(400);
+	$('#container').removeClass('blur');
 });
 
 $('.face').on('click', function()
@@ -335,7 +338,8 @@ $('.reset').on('click',function()
 	$('#close').css('display','none');
 	$('.face').css('display','block');
 	$('.name').fadeOut(300);
-	// $('#photo > img').css('display','none');
+	$('#photo > img').fadeOut(300);
+	$('.item').fadeOut(300);
 	
 	center = scene.position;
 	controls.enabled = true;

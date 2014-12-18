@@ -6,10 +6,31 @@
 	    <title>page</title>
 	    <meta name="description" content="">
 	    <meta name="viewport" content="width=device-width">
-
+      <link rel="stylesheet" type="text/css" href="css/font-awesome.css" />
 	    <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
+
+  
+    <div class="container">
+      <nav id="bt-menu" class="bt-menu">
+        <a href="#" class="bt-menu-trigger"><span>Menu</span></a>
+        <ul>
+          <li><a href="#">About us</a></li>
+          
+        </ul>
+
+
+
+       <!--  <ul class="social">
+          <li><a href="#" class="fa fa-twitter"> Twitter</a></li>
+          <li><a href="#" class="fa fa-facebook">Facebook</a></li>
+          <li><a href="#" class="fa fa-github-alt">Github</a></li>
+        </ul> -->
+      </nav>
+    </div>
+
+ 
     	<div id="menu">
     		<button class="test" data-index="0">planet 1</button>
     		<button class="test" data-index="1">planet 2</button>
@@ -22,19 +43,38 @@
             <h2 class="name"> </h2>
         </div>
       <ul class='circle-container'>
-              <li><a href='#'><img src='http://lorempixel.com/100/100/city'></a></li>
-              <li><a href='#'><img src='http://lorempixel.com/100/100/nature'></a></li>
-              <li><a href='#'><img src='http://lorempixel.com/100/100/abstract'></a></li>
-              <li><a href='#'><img src='http://lorempixel.com/100/100/cats'></a></li>
-              <li><a href='#'><img src='http://lorempixel.com/100/100/food'></a></li>
-              <li><a href='#'><img src='http://lorempixel.com/100/100/animals'></a></li>
-              <li><a href='#'><img src='http://lorempixel.com/100/100/business'></a></li>
-              <li><a href='#'><img src='http://lorempixel.com/100/100/people'></a></li>
+        <li class="test" data-index="0"><a href='#'><img src='http://lorempixel.com/100/100/city'></a></li>
+        <li class="test" data-index="1"><a href='#'><img src='http://lorempixel.com/100/100/nature'></a></li>
+        <li class="test" data-index="2"><a href='#'><img src='http://lorempixel.com/100/100/abstract'></a></li>
+        <li class="test" data-index="3"><a href='#'><img src='http://lorempixel.com/100/100/cats'></a></li>
+        <li class="test" data-index="4"><a href='#'><img src='http://lorempixel.com/100/100/food'></a></li>
+        <li class="test" data-index="5"><a href='#'><img src='http://lorempixel.com/100/100/animals'></a></li>
+        <li class="test" data-index="6"><a href='#'><img src='http://lorempixel.com/100/100/business'></a></li>
+        <li class="test" data-index="7"><a href='#'><img src='http://lorempixel.com/100/100/people'></a></li>
         </ul>
-        <!-- <div id="photo">
+
+        <div id="photo">
             <img src="" alt="planete">
-        </div> -->
+        </div>
+
+        <div class="item">
+          <div class="inner">
+            <div class="content">
+              <p></p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="hexagon">
+          <p>LAND</p>
+          <img src="img/falcon.png" alt="">
+          <div class="face1"></div>
+          <div class="face2"></div>
+        </div>
+
     	<div id="container"></div>
+      
+
 		<script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
     	<script type="text/javascript" src="js/three.min.js"></script>
     	<script type="text/javascript" src="js/FlyControls.js"></script>
@@ -43,6 +83,8 @@
     	<script type="text/javascript" src="js/planeteCoords.js"></script>
     	<script type="text/javascript" src="js/tween.min.js"></script>
         <script type="text/javascript" src="js/planetsMetadata.js"></script>
+        <script src="js/classie.js"></script>
+  <script src="js/borderMenu.js"></script>
     	<script type="text/javascript" src="js/main.js"></script>
   </body>
 </html>
