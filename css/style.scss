@@ -29,90 +29,7 @@ body {
   #close{
     display: none;
   }
-  #name{
-    font-family: Century Gothic;
-    display: none;
-    position: absolute;
-    z-index: 20;
-    text-align: center;
-    width: 100%;
-    text-align: center;
-    color: #fff;
-    bottom: 20px;
 
-}
-    h2.name{
-      font-size: 50px;
-      color: #fff;
-      text-transform: uppercase;
-      -webkit-margin-before: 0;
-      -webkit-margin-after: 0;
-      letter-spacing: 10px;
-      font-weight: initial;
-
-
-    }
-  
-
-  #info{
-    width: 300px;
-    height: 500px;
-    background-color: rgba(255, 255, 255, 0.2);
-    z-index: 25;
-    color: #fff;
-    position: absolute;
-    display: none;
-    margin: 50px;
-
-    #info-abstract{
-      margin: 15px;
-      font-family: Cambria;
-    }
-  }
-  #photo{
-    position: absolute;
-    z-index: 20;
-    top: 100px;
-    left: 300px;
-    display: none;
-
-  }
-    img{
-      width: 60%;
-    }
-  
-  .item{
-    width: 300px;
-    height: 300px;
-    overflow: hidden;
-    position: absolute;
-    z-index: 26;
-    display: none;
-    left: 900px;
-    top: 200px;
-
-  }
-
-  .inner{
-    width: 300px;
-    height: 300px;
-    overflow: hidden;
-    background-color: #E4E5E7;
-    -webkit-transform:rotate(45deg);
-  }
-
-  .content{
-    width: 215px;
-    height: 56px;
-    margin-top: 70px;
-    -webkit-transform:rotate(-45deg);
-  }
-    p{
-      font-family: Century Gothic;
-      font-weight: initial;
-      font-size: 12px;
-
-    }
   .circle-container {
     position: absolute;
     width: 23em;
@@ -421,75 +338,64 @@ body {
     color: #1abc9c;
   }
 
-  .hexagon {
+ 
+  #info{
+    width: 25%;
+    height: 60%;
     position: absolute;
     z-index: 30;
-    margin: 100px auto;
-    width: 190px;
-    height: 110px;
-    background-color: #E4E5E7;
-    background-position: center center;
+    background-color: #fff;
     display: none;
-    line-height: 110px;
-    text-align: center;
-    font-family: sans-serif;
-    font-size: 25px;
-    font-weight: bold;
-    letter-spacing: 6px;
-    color: rgba(0,0,0,.6);
-    cursor: pointer;
-    transition: color 500ms ease, text-shadow 500ms ease;
-  
-    p{
-      float: right;
-      font-size: 18px;
-      margin-top: -3px;
-      margin-left: -3px;
+    top: 15%;
+    left: 70%;
+    
+    .content p{
+      margin: 30px;
+      margin-top: 45px;
+      font-family: Century Gothic;
+      font-weight: initial;
     }
+
+    .name{
+      text-align: center;
+      font-family: Century Gothic;
+      font-weight: initial;
+      font-size: 24px;
+      text-transform: uppercase;
+      color: #a5451d;
+    }
+    .border{
+      border: 3px solid black;
+      width: 95%;
+      height: 95%;
+      margin: auto;
+      margin-top: 2.5%;
+    }
+  }
+  #photo{
+    display: none;
+  
+    img{
+      position: absolute;
+      z-index: 20;
+      top: 50%;
+      left: 10%;
+      width: 20%;
+    }
+  }
+  #enter {
+    width: 125px;
+    margin-left: 200px;
     img{
       float: left;
-      width: 50%;
-      margin-top: 17px;
-      margin-left: 3px;
+    }
+    a{
+      color: black;
+      margin-top: 15px;
+      text-decoration: none;
+      float: right;
+      font-family: Century Gothic;
+      font-weight: initial;
     }
   }
-  .hexagon:hover {
-    color: rgba(0,0,0,1);
-    text-shadow: 0 0 40px black;
-  }
-
-  .hexagon .face1,
-  .hexagon .face2 {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    background: inherit;
-    z-index: -1;
-    backface-visibility: hidden;
-  }
-  .hexagon .face1:before,
-  .hexagon .face2:before {
-    content: '';
-    position: absolute;
-    width: 220px;
-    height: 220px;
-    background: inherit;
-  }
-
-  .hexagon .face1 { transform: rotate(60deg); }
-  .hexagon .face1:before {
-    left: 0;
-    transform-origin: left top;
-    transform: rotate(-60deg) translate(-110px, 0);
-  }
-
-  .hexagon .face2 { transform: rotate(-60deg); }
-  .hexagon .face2:before {
-    right: 0;
-    transform-origin: right top;
-    transform: rotate(60deg) translate(110px, 0);
-  }
-  }
+}

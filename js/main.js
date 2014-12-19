@@ -9,7 +9,7 @@ var scene, camera, renderer,bouton,index,center,
 	container = document.getElementById('container');
 var clock = new THREE.Clock();
 var loader = new THREE.ColladaLoader();
-var mount = 1000;
+var mount = 10000;
 var loaded = false;
 var plan;
 var canvas;
@@ -237,18 +237,14 @@ $('.test').on('click', function()
 	index 	= $(this).data('index');
 	center = planetes[index].mesh.position;
 	setTimeout(function() {
-		$("#name").fadeIn(400, 'swing', function(){
-	      	$('.name').html(planetsMetadata[index].name);
-			
-		});
-     	$(".item").fadeIn(400, 'swing', function(){
+     	$("#info").fadeIn(400, 'swing', function(){
+     		$('.name').html(planetsMetadata[index].name);
 			$('.content > p').html(planetsMetadata[index].text.abstract);
 
 		});
 		$("#photo").fadeIn(500, 'swing', function(){
-      		$('#photo > img').attr("src", planetsMetadata[index].image );
+      		$('.img_desc').attr("src", planetsMetadata[index].image );
 		});
-		$(".hexagon").fadeIn(400);
 	}, 2000);
  	 
 	zoomOnPlanet(index, 130); 
@@ -350,6 +346,42 @@ function onDocumentMouseDown( event )
 		zoomOnPlanet(pos,130);
 	}
 }
+$.fn.materialripple = function(options) {
+	var defaults = {
+		rippleClass: 'ripple-wrapper'
+	}
+	$.extend(defaults, options);
+
+	// add Ripple-Wrapper to all Elements
+	$(this).append('<span class="'+defaults.rippleClass+'"></span>');
+	$(this).addClass('has-ripple').css({'position': 'relative', 'overflow': 'hidden'});
+
+	// Let it ripple on click
+	$(this).bind('click', function(e){
+		$(this).find('.'+defaults.rippleClass).removeClass('animated');
+		// get Mouse Position
+		var mouseX = e.clientX;
+		var mouseY = e.clientY;
+
+		// for each ripple element, set sizes
+		elementWidth = $(this).outerWidth();
+		elementHeight = $(this).outerHeight();
+		d = Math.max(elementWidth, elementHeight);
+		$(this).find('.'+defaults.rippleClass).css({'width': d, 'height': d});
+
+		var rippleX = e.clientX - $(this).offset().left - d/2;
+		var rippleY = e.clientY - $(this).offset().top - d/2;
+
+		// Position the Ripple Element
+		$(this).find('.'+defaults.rippleClass).css('top', rippleY+'px').css('left', rippleX+'px').addClass('animated');
+
+
+	});
+}
+
+$(function(){
+		$('.ripple').materialripple();
+	});
 
 init();
 animate();
