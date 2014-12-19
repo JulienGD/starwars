@@ -9,10 +9,11 @@ var scene, camera, renderer,bouton,index,center,
 	container = document.getElementById('container');
 var clock = new THREE.Clock();
 var loader = new THREE.ColladaLoader();
-var mount = 10000;
+var mount = 20000;
 var loaded = false;
 var plan;
 var canvas;
+var indexZoom;
 
 var Planete = function(planeteJSON,index)
 {
@@ -231,15 +232,20 @@ function replaceCamera(x,y,z)
 		.start();
 }
 
+$('.entrerbouton').click(function(){
+
+	$('#loader').fadeOut(700);
+	$('#content').fadeIn(700);
+});
+
 $('.test').on('click', function()
 {
-	$('#info-abstract').html("");
 	index 	= $(this).data('index');
 	center = planetes[index].mesh.position;
 	setTimeout(function() {
      	$("#info").fadeIn(400, 'swing', function(){
      		$('.name').html(planetsMetadata[index].name);
-			$('.content > p').html(planetsMetadata[index].text.abstract);
+			$('.content > p').html(planetsMetadata[index].abstract);
 
 		});
 		$("#photo").fadeIn(500, 'swing', function(){
@@ -261,8 +267,8 @@ $('.reset').on('click',function()
 {
 	$('#close').css('display','none');
 	$('.face').css('display','block');
-	$('.name').fadeOut(300);
-	$('#photo > img').fadeOut(300);
+	$('#info').fadeOut(300);
+	$('#photo').fadeOut(300);
 	$('.item').fadeOut(300);
 	
 	center = scene.position;
@@ -341,9 +347,8 @@ function onDocumentMouseDown( event )
 
 	if ( intersects.length > 0 )
 	{
-		console.log(intersects[0].object.parent.parent.instance.index);
-		var pos = intersects[0].object.parent.parent.instance.index;
-		zoomOnPlanet(pos,130);
+		indexZoom = intersects[0].object.parent.parent.instance.index;
+		zoomOnPlanet(indexZoom,130);
 	}
 }
 $.fn.materialripple = function(options) {
@@ -352,18 +357,14 @@ $.fn.materialripple = function(options) {
 	}
 	$.extend(defaults, options);
 
-	// add Ripple-Wrapper to all Elements
 	$(this).append('<span class="'+defaults.rippleClass+'"></span>');
 	$(this).addClass('has-ripple').css({'position': 'relative', 'overflow': 'hidden'});
 
-	// Let it ripple on click
 	$(this).bind('click', function(e){
 		$(this).find('.'+defaults.rippleClass).removeClass('animated');
-		// get Mouse Position
 		var mouseX = e.clientX;
 		var mouseY = e.clientY;
 
-		// for each ripple element, set sizes
 		elementWidth = $(this).outerWidth();
 		elementHeight = $(this).outerHeight();
 		d = Math.max(elementWidth, elementHeight);
@@ -372,7 +373,6 @@ $.fn.materialripple = function(options) {
 		var rippleX = e.clientX - $(this).offset().left - d/2;
 		var rippleY = e.clientY - $(this).offset().top - d/2;
 
-		// Position the Ripple Element
 		$(this).find('.'+defaults.rippleClass).css('top', rippleY+'px').css('left', rippleX+'px').addClass('animated');
 
 
